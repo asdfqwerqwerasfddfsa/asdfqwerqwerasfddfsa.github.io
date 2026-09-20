@@ -1,3 +1,22 @@
+/* ── HASH-FREE SMOOTH SCROLL ── */
+document.addEventListener('click', function (e) {
+  const link = e.target.closest('a[href^="#"]');
+  if (!link) return;
+  const hash = link.getAttribute('href');
+  if (!hash || hash === '#') return;
+  /* Watch trailer is handled separately */
+  if (link.getAttribute('onclick')) return;
+  e.preventDefault();
+  const target = document.querySelector(hash);
+  if (!target) return;
+  const hdr = document.getElementById('siteHeader');
+  const offset = hdr ? hdr.getBoundingClientRect().height : 0;
+  const top = target.getBoundingClientRect().top + window.scrollY - offset;
+  window.scrollTo({ top: top, behavior: 'smooth' });
+  /* Keep URL clean — no hash */
+  history.replaceState(null, '', window.location.pathname);
+});
+
 const revealObserver = new IntersectionObserver(
   (entries) => {
     entries.forEach((entry) => {
