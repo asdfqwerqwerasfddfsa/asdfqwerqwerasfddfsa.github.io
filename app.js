@@ -9,10 +9,8 @@ document.addEventListener('click', function (e) {
   e.preventDefault();
   const target = document.querySelector(hash);
   if (!target) return;
-  const hdr = document.getElementById('siteHeader');
-  const offset = hdr ? hdr.getBoundingClientRect().height : 0;
-  const top = target.getBoundingClientRect().top + window.scrollY - offset;
-  window.scrollTo({ top: top, behavior: 'smooth' });
+  const top = target.getBoundingClientRect().top + window.scrollY;
+  window.scrollTo({ top: Math.max(0, top), behavior: 'smooth' });
   /* Keep URL clean — no hash */
   history.replaceState(null, '', window.location.pathname);
 });
